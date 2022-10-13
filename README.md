@@ -22,7 +22,7 @@ If you find our work relevant to your research, or use this code, please cite ou
 ```
 @inproceedings{feddrive2022,
   title={FedDrive: Generalizing Federated Learning to Semantic Segmentation in Autonomous Driving},
-  author={Fantauzzo, Lidia and Fani', Eros and Caldarola, Debora and Tavera, Antonio and Cermelli, Fabio and Ciccone, Marco and Caputo, Barbara},
+  author={Fantauzzo, Lidia and Fanì, Eros and Caldarola, Debora and Tavera, Antonio and Cermelli, Fabio and Ciccone, Marco and Caputo, Barbara},
   booktitle={Proceedings of the 2022 IEEE/RSJ International Conference on Intelligent Robots and Systems},
   year={2022}
 }
@@ -55,7 +55,7 @@ You may need a new account if you do not have one yet. Download the ```gtFine_tr
 
 5) Extract the archives and move the ```gtFine``` and ```leftImg8bit``` folders in ```[local_repo_path]/data/cityscapes/data/```
 
-6) Ask for the ```IDDAsmall``` version of IDDA, soon available [here](https://idda-dataset.github.io/home/download/)
+6) Ask for the ```IDDA V3``` version of IDDA, available [here](https://idda-dataset.github.io/home/download/)
 
 7) Extract the archive and move the ```IDDAsmall``` folder in ```[local_repo_path]/data/idda/data/```
 
