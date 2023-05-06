@@ -107,3 +107,22 @@ mIoU &pm; std (%).
 | SiloBN           | rainy       | 62.48 &pm; 1.42     | 50.03 &pm; 0.79     |
 | SiloBN + CFSI    | rainy       | 63.04 &pm; 0.31     | 50.54 &pm; 0.88     |
 | **SiloBN + LAB** | **rainy**   | **65.85 &pm; 0.91** | **53.99 &pm; 0.79** |
+
+
+## How to visualize model predictions, LAB and CFSI images
+
+The script ```plot_samples.py``` is designed to save and eventually visualize
+sets of ```(image, CFSI(image), LAB(image), target, model(image))```
+from samples in the test set(s) associated with a dataset, given a checkpoint
+and the indices of the images to show.
+
+To use this script:
+
+1) Download the checkpoint of the desired run from WandB
+2) Copy the ```[run_args]``` from the info of the same run on wandb
+3) Customize the load_path, indices, path_to_save_folder and plot variables options
+4) Modify the ```CUDA_VISIBLE_DEVICES``` environment variable to select one single desired GPU 
+5) Move to the root directory of this repository and run the following command:
+```
+python src/plot_samples.py [run_args]
+```

@@ -24,7 +24,7 @@ def seed_worker(_):
 class Client:
 
     def __init__(self, client_id, dataset, model, logger, writer, args, batch_size, world_size, rank, num_gpu,
-                 device=None, **kwargs):
+                 device=None, disable_ddp=False, **kwargs):
 
         self.id = client_id
         self.dataset = dataset
@@ -35,16 +35,21 @@ class Client:
         self.writer = writer
         self.args = args
 
-        if args.random_seed is not None:
-            g = torch.Generator()
-            g.manual_seed(args.random_seed)
-            self.loader = data.DataLoader(self.dataset, batch_size=self.batch_size, worker_init_fn=seed_worker,
-                                          sampler=DistributedSampler(self.dataset, num_replicas=world_size, rank=rank),
-                                          num_workers=4 * num_gpu, drop_last=True, pin_memory=True, generator=g)
+        if disable_ddp:
+            self.loader = data.DataLoader(self.dataset, batch_size=self.batch_size, drop_last=True)
         else:
-            self.loader = data.DataLoader(self.dataset, batch_size=self.batch_size,
-                                          sampler=DistributedSampler(self.dataset, num_replicas=world_size, rank=rank),
-                                          num_workers=4 * num_gpu, drop_last=True, pin_memory=True)
+            if args.random_seed is not None:
+                g = torch.Generator()
+                g.manual_seed(args.random_seed)
+                self.loader = data.DataLoader(self.dataset, batch_size=self.batch_size, worker_init_fn=seed_worker,
+                                              sampler=DistributedSampler(self.dataset, num_replicas=world_size,
+                                                                         rank=rank),
+                                              num_workers=4 * num_gpu, drop_last=True, pin_memory=True, generator=g)
+            else:
+                self.loader = data.DataLoader(self.dataset, batch_size=self.batch_size,
+                                              sampler=DistributedSampler(self.dataset, num_replicas=world_size,
+                                                                         rank=rank),
+                                              num_workers=4 * num_gpu, drop_last=True, pin_memory=True)
 
         self.criterion = nn.CrossEntropyLoss(ignore_index=255, reduction='none')
         self.reduction = HardNegativeMining() if args.hnm else MeanReduction()

@@ -44,10 +44,9 @@ def define_client(args):
 
 
 def create_clients(args, train_data, test_data, model, world_size, rank, device, logger, writer, num_gpu, train,
-                   ckpt_path):
+                   ckpt_path, disable_ddp=False):
     if args.dataset == 'idda' or args.dataset == 'cityscapes':
         train_transform, test_transform, test_bisenetv2, dataset = get_dataset(args, train)
-        transform = []
     else:
         transform, test_bisenetv2, dataset = get_dataset(args, train)
         train_transform = test_transform = []
@@ -75,7 +74,7 @@ def create_clients(args, train_data, test_data, model, world_size, rank, device,
             raise NotImplementedError
 
         client = client_func(user, ds, model, logger, writer, args, batch_size, world_size, rank, num_gpu,
-                             device=device, ckpt_path=ckpt_path, name=args.name)
+                             device=device, ckpt_path=ckpt_path, name=args.name, disable_ddp=disable_ddp)
 
         clients.append(client)
 
@@ -132,7 +131,8 @@ def create_domgen_bank(args, train_data):
                     f.close()
 
 
-def setup_clients(args, logger, writer, model, world_size, rank, num_gpu, device=None, ckpt_path=None):
+def setup_clients(args, logger, writer, model, world_size, rank, num_gpu, device=None, ckpt_path=None,
+                  disable_ddp=False):
     if args.dataset == 'cityscapes':
         train_data_dir = os.path.join('..', 'data', args.dataset, 'data', args.clients_type, 'train')
         test_data_dir = os.path.join('..', 'data', args.dataset, 'data', args.clients_type, 'test')
@@ -156,9 +156,9 @@ def setup_clients(args, logger, writer, model, world_size, rank, num_gpu, device
         train_data = {'centralized_user': train_data_all}
 
     train_clients = create_clients(args, train_data, test_data, model, world_size, rank, device, logger, writer,
-                                   num_gpu, train=True, ckpt_path=ckpt_path)
+                                   num_gpu, train=True, ckpt_path=ckpt_path, disable_ddp=disable_ddp)
 
     test_clients = create_clients(args, train_data, test_data, model, world_size, rank, device, logger, writer, num_gpu,
-                                  train=False, ckpt_path=ckpt_path)
+                                  train=False, ckpt_path=ckpt_path, disable_ddp=disable_ddp)
 
     return train_clients, test_clients

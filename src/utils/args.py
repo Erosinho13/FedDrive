@@ -123,7 +123,7 @@ def parse_args():
     parser.add_argument('--save_samples', action='store_true', default=False, help='Save samples pictures on cloud')
     parser.add_argument('--wandb_offline', action='store_true', default=False,
                         help='if you want wandb offline set to True, otherwise it uploads results on cloud')
-    parser.add_argument('--wandb_entity', type=str, default='FedAvg_SemSeg', help='name of the wandb entity')
+    parser.add_argument('--wandb_entity', type=str, default='feddrive', help='name of the wandb entity')
 
     # ||| Test and Checkpoint options |||
     parser.add_argument('--load', action='store_true', default=False, help='Whether to use pretrained or not')
