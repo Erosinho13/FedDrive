@@ -1,8 +1,8 @@
 import argparse
 
 DATASETS = ['cityscapes', 'idda']
-CL_TYPE = ['heterogeneous', 'uniform']
-SETTING_TYPE = ['country', 'rainy']
+CL_TYPE = ['heterogeneous', 'uniform', 'class_imbalance']
+SETTING_TYPE = ['country', 'rainy', 'bus']
 POLICIES = ['poly', 'step', 'None']
 MODELS = ['bisenetv2']
 OPTIMIZERS = ['SGD', 'Adam']
