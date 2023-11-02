@@ -1,25 +1,36 @@
-# FedDrive: Generalizing Federated Learning to Semantic Segmentation in Autonomous Driving
+<img id="logo" class="center" src="feddrive_logo.png" alt="drawing"/>
+<img class="sub-title" src="subtitle.png" alt="drawing"/>
 
-**Official implementation** of [FedDrive: Generalizing Federated Learning to Semantic Segmentation
-in Autonomous Driving](https://arxiv.org/abs/2202.13670) 
+**Official repository** of:
+- [E. Fanì](https://scholar.google.com/citations?user=rwto7AgAAAAJ&hl=it), [M. Ciccone](https://scholar.google.com/citations?user=hOQjblcAAAAJ&hl=it), [B. Caputo](https://scholar.google.com/citations?user=mHbdIAwAAAAJ&hl=it). [**FedDrive v2: an Analysis of the Impact of Label Skewness in 
+  Federated Semantic Segmentation for Autonomous Driving**](https://arxiv.org/abs/2309.13336). _5th Italian Conference on Robotics and Intelligent
+  Machines (I-RIM)_, 2023.
+- L. Fantauzzo<sup>\*</sup>, [E. Fanì](https://scholar.google.com/citations?user=rwto7AgAAAAJ&hl=it)<sup>\*</sup>, [D. Caldarola](https://scholar.google.com/citations?user=rX-VwlcAAAAJ&hl=it), [A. Tavera](https://scholar.google.com/citations?user=oQfTuXMAAAAJ&hl=it),
+  [F. Cermelli](https://scholar.google.com/citations?user=-fEOFbMAAAAJ&hl=it)<sup>1</sup>, [M. Ciccone](https://scholar.google.com/citations?user=hOQjblcAAAAJ&hl=it), [B. Caputo](https://scholar.google.com/citations?user=mHbdIAwAAAAJ&hl=it). [**FedDrive: Generalizing Federated Learning to 
+  Semantic Segmentation in Autonomous Driving**](https://arxiv.org/abs/2202.13670), _IEEE/RSJ International
+  Conference on Intelligent Robots and Systems_, 2022.
 
-by **Lidia Fantauzzo**<sup>\*,1</sup>, **Eros Fanì**<sup>\*,1</sup>, Debora Caldarola<sup>1</sup>,
-Antonio Tavera<sup>1</sup>, Fabio Cermelli<sup>1,2</sup>, Marco Ciccone<sup>1</sup>, Barbara Caputo<sup>1</sup>. 
+**Corresponding author:** eros.fani@polito.it.
 
-**Official Website:** [https://feddrive.github.io/](https://feddrive.github.io/).
+All the authors are supported by Politecnico di Torino, Turin, Italy. 
 
-**Corresponding authors:** lidia.fantauzzo@studenti.polito.it, eros.fani@polito.it.
+<sup>\*</sup>Equal contribution.
+<sup>1</sup>Fabio Cermelli is with Italian Institute of Technology, Genoa, Italy.
 
-<sup>\*</sup>Equal contribution. <sup>1</sup>All the authors are supported by Politecnico di Torino, Turin, Italy. 
-<sup>2</sup>Fabio Cermelli is with Italian Institute of Technology, Genoa, Italy.
-
-<img src="teaser.png" alt="drawing" width="800"/>
+**Official website:** https://feddrive.github.io/
 
 ## Citation
 
-If you find our work relevant to your research, or use this code, please cite our IROS 2022 paper:
+If you find our work relevant to your research or use our code, please cite our papers:
 
 ```
+@inproceedings{feddrive2023,
+  title={FedDrive v2: an Analysis of the Impact of Label Skewness in Federated Semantic Segmentation for Autonomous Driving},
+  author={Fanì, Eros and Ciccone, Marco and Caputo, Barbara},
+  journal={5th Italian Conference on Robotics and Intelligent Machines (I-RIM)},
+  year={2023}
+}
+
 @inproceedings{feddrive2022,
   title={FedDrive: Generalizing Federated Learning to Semantic Segmentation in Autonomous Driving},
   author={Fantauzzo, Lidia and Fanì, Eros and Caldarola, Debora and Tavera, Antonio and Cermelli, Fabio and Ciccone, Marco and Caputo, Barbara},
@@ -30,13 +41,71 @@ If you find our work relevant to your research, or use this code, please cite ou
 
 ## Summary
 
-FedDrive is a new benchmark for the Semantic Segmentation task in a Federated Learning scenario for self-driving cars.
-It consists of three settings and two datasets, incorporating the real-world challenges of statistical heterogeneity
-and domain generalization. FedDrive is a benchmark of state-of-the-art algorithms and style transfer methods taken from
-the Federated Learning, Domain Generalization, and Domain Adaptation literature, whose objective is to improve the
-generalization ability and robustness statistical heterogeneity robustness of the model. We demonstrate that correctly
-handling normalization statistics is crucial to deal with the aforementioned challenges. Furthermore, style transfer
-dramatically improves performance when dealing with significant appearance shifts.
+**FedDrive** is a new benchmark for the **Semantic Segmentation** task in a **Federated Learning** scenario for
+**autonomous driving**.
+
+It consists of <u>12 distinct scenarios</u>, incorporating the real-world challenges of <u>statistical heterogeneity</u>
+and <u>domain generalization</u>. FedDrive incorporates algorithms and style transfer methods from Federated Learning,
+Domain  Generalization, and Domain Adaptation literature. Its main goal is to enhance model generalization and
+robustness against statistical heterogeneity.
+
+We show the importance of using the correct clients’ statistics when dealing with different domains and label skewness
+and how  style transfer techniques can improve the performance on unseen domains, proving FedDrive to be a solid
+baseline for future research in federated semantic segmentation.
+
+<table class="table_max">
+  <caption>Summary of the FedDrive scenarios.</caption>
+  <thead>
+    <tr>
+      <th>Dataset</th>
+      <th>Setting</th>
+      <th>Distribution</th>
+      <th># Clients</th>
+      <th># img/cl</th>
+      <th>Test clients</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> Cityscapes </td>
+      <td> - </td>
+      <td> <span class="uniform">Uniform</span>, <span class="heterogeneous">Heterogeneous</span>, 
+        <span class="imbalance">Class Imbalance</span> </td>
+      <td> 146 </td>
+      <td> 10-45 </td>
+      <td> unseen cities </td>
+    </tr>
+    <tr>
+      <td rowspan="3"> IDDA </td>
+      <td> <span class="country">Country</span> </td>
+      <td> <span class="uniform">Uniform</span>, <span class="heterogeneous">Heterogeneous</span>, 
+        <span class="imbalance">Class Imbalance</span> </td>
+      <td> 90 </td>
+      <td> 48 </td>
+      <td> seen + unseen (country) domains </td>
+    </tr>
+    <tr>
+      <td> <span class="rainy">Rainy</span> </td>
+      <td> <span class="uniform">Uniform</span>, <span class="heterogeneous">Heterogeneous</span>, 
+        <span class="imbalance">Class Imbalance</span> </td>
+      <td> 69 </td>
+      <td> 48 </td>
+      <td> seen + unseen (rainy) domains </td>
+    </tr>
+    <tr>
+      <td> <span class="bus">Bus</span> </td>
+      <td> <span class="uniform">Uniform</span>, <span class="heterogeneous">Heterogeneous</span>, 
+        <span class="imbalance">Class Imbalance</span> </td>
+      <td> 83 </td>
+      <td> 48 </td>
+      <td> seen + unseen (bus) domains </td>
+    </tr>
+  </tbody>
+</table>
+
+## Results
+
+Please visit the [FedDrive official website](https://feddrive.github.io/) for the results.
 
 ## Setup
 
@@ -69,45 +138,6 @@ Run one of the exemplar configs or a custom one:
 N.B. change the ```wandb_entity``` argument with the entity name of your wandb project.
 
 N.B. always leave a blank new line at the end of the config. Otherwise, your last argument will be ignored.
-
-## Results
-
-### Cityscapes
-
-| Method           | mIoU &pm; std (%)   |
-|------------------|---------------------|
-| FedAvg (uniform) | 45.62 &pm; 1.25     |
-| FedAvg           | 43.33 &pm; 1.66     |
-| FedAvg + CFSI    | 40.55 &pm; 2.15     |
-| FedAvg + LAB     | 42.69 &pm; 2.07     |
-| SiloBN           | 52.86 &pm; 1.29     |
-| SiloBN + CFSI    | 52.11 &pm; 1.83     |
-| **SiloBN + LAB** | **53.37 &pm; 1.65** |
-
-### IDDA
-
-The *seen* and *unseen* columns refer to the results for the test client that contains images from the same training
-domains and to the test client that contains images from other domains, respectively. Results are reported in the form
-mIoU &pm; std (%).
-
-| Method           | Setting     | seen                | unseen              |
-|------------------|-------------|---------------------|---------------------|
-| FedAvg (uniform) | country     | 63.57 &pm; 0.60     | 49.74 &pm; 0.79     |
-| FedAvg           | country     | 42.43 &pm; 1.78     | 40.01 &pm; 1.26     |
-| FedAvg + CFSI    | country     | 54.70 &pm; 1.12     | 45.70 &pm; 1.73     |
-| FedAvg + LAB     | country     | 56.59 &pm; 0.90     | 45.68 &pm; 1.04     |
-| FedBN            | country     | 54.39               | -                   |
-| SiloBN           | country     | 58.82 &pm; 2.93     | 45.32 &pm; 0.90     |
-| SiloBN + CFSI    | country     | 61.22 &pm; 3.88     | 49.17 &pm; 1.01     |
-| **SiloBN + LAB** | **country** | **64.32 &pm; 0.76** | **50.43 &pm; 0.63** |
-| FedAvg           | rainy       | 62.72 &pm; 3.35     | 27.61 &pm; 2.80     |
-| FedAvg + CFSI    | rainy       | 38.18 &pm; 1.40     | 26.75 &pm; 2.32     |
-| FedAvg + LAB     | rainy       | 55.24 &pm; 1.65     | 31.05 &pm; 2.68     |
-| FedBN            | rainy       | 56.45               | -                   |
-| SiloBN           | rainy       | 62.48 &pm; 1.42     | 50.03 &pm; 0.79     |
-| SiloBN + CFSI    | rainy       | 63.04 &pm; 0.31     | 50.54 &pm; 0.88     |
-| **SiloBN + LAB** | **rainy**   | **65.85 &pm; 0.91** | **53.99 &pm; 0.79** |
-
 
 ## How to visualize model predictions, LAB and CFSI images
 
